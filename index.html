@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invenio | Professional Inventory</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i data-lucide="package" class="logo-icon"></i>
+                <span class="logo-text">Invenio</span>
+            </div>
+            <nav class="nav-links">
+                <a href="#" class="nav-item active">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>Inventory Dashboard</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="avatar">AD</div>
+                    <div class="user-info">
+                        <span class="user-name">Admin</span>
+                        <span class="user-role">Manager</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="search-bar">
+                    <i data-lucide="search"></i>
+                    <input type="text" id="search-input" placeholder="Search by name or barcode...">
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="add-product-btn">
+                        <i data-lucide="plus"></i>
+                        <span>Add Product</span>
+                    </button>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <span class="stat-label">Total Profit</span>
+                            <h3 class="stat-value" id="total-profit">$0.00</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <span class="stat-label">Stock Items</span>
+                            <h3 class="stat-value" id="total-items">0</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <span class="stat-label">Low Stock</span>
+                            <h3 class="stat-value" id="low-stock-count">0</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Section -->
+                <div class="section-container">
+                    <div class="table-section">
+                        <div class="section-header">
+                            <h3>Product Inventory</h3>
+                        </div>
+                        <div class="table-container">
+                            <table id="inventory-table">
+                                <thead>
+                                    <tr>
+                                        <th>Product Name</th>
+                                        <th>Barcode</th>
+                                        <th>Cost</th>
+                                        <th>Price</th>
+                                        <th>Qty</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="inventory-body">
+                                    <!-- Dynamic content -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="chart-section">
+                        <div class="section-header">
+                            <h3>Sales Distribution</h3>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="salesChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Product</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="add-product-form">
+                <div class="form-group">
+                    <label>Product Name</label>
+                    <input type="text" id="p-name" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Cost ($)</label>
+                        <input type="number" id="p-cost" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Price ($)</label>
+                        <input type="number" id="p-sell" step="0.01" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Quantity</label>
+                    <input type="number" id="p-qty" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Save Product</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="sell-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Record Sale</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="sell-product-form">
+                <input type="hidden" id="sell-barcode">
+                <p>Selling: <span id="sell-product-name" style="font-weight: 600;"></span></p>
+                <div class="form-group" style="margin-top: 15px;">
+                    <label>Quantity</label>
+                    <input type="number" id="sell-qty" required min="1" value="1">
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Confirm Sale</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>lucide.createIcons();</script>
+</body>
+</html>
